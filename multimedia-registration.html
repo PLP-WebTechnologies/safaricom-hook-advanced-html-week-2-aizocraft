@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Assignment</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f4f4f9, #e3e8f0);
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        /* Multimedia Section */
+        audio, video {
+            width: 100%;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        video {
+            max-height: 400px;
+        }
+
+        /* Form Styling */
+        form {
+            margin-top: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        button {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .terms-label {
+            display: flex;
+            align-items: center;
+        }
+        .terms-label input {
+            margin-right: 10px;
+        }
+
+        /* Gender Section Styling */
+        .gender-options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .gender-option {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .gender-option input {
+            margin-right: 8px;
+        }
+
+        /* Success Message */
+        .success-message {
+            background-color: #28a745;
+            color: white;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px 0;
+            background: #f4f4f9;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Multimedia and Registration Form</h1>
+
+        <!-- Part 1: Multimedia Webpage -->
+        <section>
+            <h2>Multimedia Content</h2>
+            <h3>Audio Player</h3>
+            <audio controls>
+                <source src="behappy.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <h3>Video Player</h3>
+            <video controls poster="poster.png">
+                <source src="videoplayback.mp4" type="video/mp4">
+                <source src="videoplayback.webm" type="video/webm">
+                Your browser does not support the video element.
+            </video>
+        </section>
+
+        <!-- Part 2: Registration Form -->
+        <section>
+            <h2>Registration Form</h2>
+            <form id="registrationForm" action="#" method="post" onsubmit="return handleSubmit(event)">
+                <fieldset>
+                    <legend>Personal Details</legend>
+
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" minlength="8" required>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Additional Details</legend>
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" placeholder="Enter your age" min="18" required>
+
+                    <label>Gender:</label>
+                    <div class="gender-options">
+                        <div class="gender-option">
+                            <input type="radio" id="male" name="gender" value="Male" required>
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="female" name="gender" value="Female">
+                            <label for="female">Female</label>
+                        </div>
+                        <div class="gender-option">
+                            <input type="radio" id="other" name="gender" value="Other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <label class="terms-label">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    I agree to the terms and conditions
+                </label>
+
+                <button type="submit">Register</button>
+            </form>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="success-message" style="display: none;">
+                <h3>Registration Successful!</h3>
+                <p id="userDetails"></p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2024. All rights reserved.
+    </footer>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get user input values
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const age = document.getElementById('age').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+
+            // Validate age
+            if (age < 18) {
+                alert("You must be 18 or older to register.");
+                return false;
+            }
+
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            const userDetails = document.getElementById('userDetails');
+            userDetails.innerHTML = `
+                <strong>Full Name:</strong> ${fullname} <br>
+                <strong>Email:</strong> ${email} <br>
+                <strong>Gender:</strong> ${gender} <br>
+                <strong>Age:</strong> ${age} <br>
+            `;
+            successMessage.style.display = 'block';
+            return false; // Prevent form submission
+        }
+    </script>
+
+</body>
+</html>
